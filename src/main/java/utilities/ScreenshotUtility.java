@@ -15,9 +15,9 @@ public class ScreenshotUtility {
     public static String capture(WebDriver driver, String testName) {
         try{
             File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            Path screenshotsFolder = Paths.get("screenshots");
+            Path screenshotsFolder = Paths.get(FileUtility.getProjectRoot(), "screenshots");
             Files.createDirectories(screenshotsFolder);
-            Path target = screenshotsFolder.resolve(testName + "_" + System.currentTimeMillis() + ".png");
+            Path target = screenshotsFolder.resolve(testName + "_" + FileUtility.generateTimestamp() + ".png");
             Files.copy(source.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Screenshot Path: " + target.toAbsolutePath());
             return target.toAbsolutePath().toString();
